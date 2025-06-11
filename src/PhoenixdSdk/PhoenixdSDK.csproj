@@ -12,6 +12,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>True</IsPackable>
+    <PackageOutputPath>$(SolutionDir)nuget</PackageOutputPath>
     <RootNamespace>KredoKodo.PhoenixdSDK</RootNamespace>
   </PropertyGroup>
 
