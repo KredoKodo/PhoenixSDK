@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhoenixdSdk\PhoenixdSDK.csproj" />
+    <ProjectReference Include="..\PhoenixdSDK\PhoenixdSDK.csproj" />
   </ItemGroup>
 
 </Project>
