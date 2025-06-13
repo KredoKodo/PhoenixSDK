@@ -51,8 +51,8 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             int feerateSatByte)
         {
             #region Input Validation
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(channelId, nameof(channelId));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(address, nameof(address));
+            ValidationHelpers.ValidateStringIfNotNull(channelId, nameof(channelId));
+            ValidationHelpers.ValidateStringIfNotNull(address, nameof(address));
             #endregion
 
             if (feerateSatByte <= 0)
@@ -75,7 +75,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>Decoded invoice information as a <see cref="DecodeInvoiceResponse"/> object.</returns>
         public async Task<DecodeInvoiceResponse> DecodeInvoiceAsync(string invoice)
         {
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(invoice, nameof(invoice));
+            ValidationHelpers.ValidateStringIfNotNull(invoice, nameof(invoice));
 
             var request = new RestRequest("/decodeinvoice", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -106,7 +106,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>Decoded invoice information as a <see cref="DecodeBolt12OfferResponse"/> object.</returns>
         public async Task<DecodeBolt12OfferResponse?> DecodeBolt12OfferAsync(string offer)
         {
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(offer, nameof(offer));
+            ValidationHelpers.ValidateStringIfNotNull(offer, nameof(offer));
 
             var request = new RestRequest("/decodeoffer", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");

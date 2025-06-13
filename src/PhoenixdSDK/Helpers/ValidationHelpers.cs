@@ -14,10 +14,16 @@
                 throw new ArgumentException($"{paramName} must be positive when specified", paramName);
         }
 
-        public static void EnsureNotNullOrWhiteSpace(string? value, string paramName)
+        public static void ValidateStringIfNotNull(string? value, string paramName)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException($"{paramName} cannot be null or empty", paramName);
+            if (value == null)
+                return;
+
+            if (value == "")
+                throw new ArgumentException($"{paramName} cannot be empty", paramName);
+
+            if (value.Trim() == "")
+                throw new ArgumentException($"{paramName} cannot be whitespace", paramName);
         }
 
         public static void ValidateNonNegativeValue(int? value, string paramName)

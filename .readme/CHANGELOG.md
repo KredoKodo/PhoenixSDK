@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Better documentation.
 - Better validation of inputs and outputs.
 
+## [1.0.3] - 2025-06-13
+
+### Added
+- N/A (no new features added in this release)
+
+### Changed
+- N/A (no changes made in this release)
+ 
+### Fixed
+- Fixed a bug introduced in the previous version regarding string validation for optional parameters.
+
 ## [1.0.2] - 2025-06-10
 
 ### Added
@@ -46,6 +57,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Release Notes
+
+### Version 1.0.3
+Fixed a bug that was introduced in the previous version that caused null check errors when optional parameters were not provided.  The string validation class was updated and renamed to fix this issue.
 
 ### Version 1.0.2
 Added LNRUL support for LNURL Pay, LNURL Withdraw, and LNURL Auth.  The codebase has been simplified by removing duplicate validation code and replacing it with a single validation class.  The file structure for the logo, README, and changelog has been updated to be more organized.  No bugs were reported in this release.

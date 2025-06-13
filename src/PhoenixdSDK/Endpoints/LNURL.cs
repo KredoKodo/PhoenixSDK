@@ -20,7 +20,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         {
             #region Input Validation
             ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(lnurl, nameof(lnurl));
+            ValidationHelpers.ValidateStringIfNotNull(lnurl, nameof(lnurl));
             #endregion
 
             var request = new RestRequest("/lnurlpay", Method.Post);
@@ -42,7 +42,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>The LNURL service response as a <see cref="WithdrawResponseModel"/> object.</returns>
         public async Task<WithdrawResponseModel> Withdraw(string lnurl)
         {
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(lnurl, nameof(lnurl));
+            ValidationHelpers.ValidateStringIfNotNull(lnurl, nameof(lnurl));
 
             var request = new RestRequest("/lnurlwithdraw", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -59,7 +59,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>The LNURL service response as a string.</returns>
         public async Task<string> Auth(string lnurl)
         {
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(lnurl, nameof(lnurl));
+            ValidationHelpers.ValidateStringIfNotNull(lnurl, nameof(lnurl));
 
             var request = new RestRequest("/lnurlwithdraw", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");

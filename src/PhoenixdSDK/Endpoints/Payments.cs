@@ -24,8 +24,8 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         {
             #region Input Validation
             ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(description, nameof(description));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(description, nameof(description));
+            ValidationHelpers.ValidateStringIfNotNull(description, nameof(description));
+            ValidationHelpers.ValidateStringIfNotNull(description, nameof(description));
 
             if (description.Length > 128)
                 throw new ArgumentException("Description is too long", nameof(description));
@@ -127,7 +127,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             int? amountSat = null)
         {
             #region Input Validation
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(invoice, nameof(invoice));
+            ValidationHelpers.ValidateStringIfNotNull(invoice, nameof(invoice));
             ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
             #endregion
 
@@ -160,8 +160,8 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? message = null)
         {
             #region Input Validation
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(offer, nameof(offer));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(message, nameof(message));
+            ValidationHelpers.ValidateStringIfNotNull(offer, nameof(offer));
+            ValidationHelpers.ValidateStringIfNotNull(message, nameof(message));
             ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
 
             if (message!.Length > 128)
@@ -202,9 +202,9 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? message = null)
         {
             #region Input Validation
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(address, nameof(address));
+            ValidationHelpers.ValidateStringIfNotNull(address, nameof(address));
             ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(message, nameof(message));
+            ValidationHelpers.ValidateStringIfNotNull(message, nameof(message));
 
             if (message!.Length > 128)
                 throw new ArgumentException("Message is too long", nameof(message));
@@ -245,7 +245,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         {
             #region Input Validation
             ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(address, nameof(address));
+            ValidationHelpers.ValidateStringIfNotNull(address, nameof(address));
             ValidationHelpers.ValidatePositiveValue(feerateSatByte, nameof(feerateSatByte));
             #endregion
 
@@ -302,7 +302,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
 
             ValidationHelpers.ValidatePositiveValue(limit, nameof(limit));
             ValidationHelpers.ValidateNonNegativeValue(offset, nameof(offset));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(externalId, nameof(externalId));
+            ValidationHelpers.ValidateStringIfNotNull(externalId, nameof(externalId));
             #endregion
 
             var request = new RestRequest("/payments/incoming", Method.Get);
@@ -336,7 +336,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>A an incoming payment as a <see cref="GetIncomingPaymentResponse"/> object.</returns>
         public async Task<GetIncomingPaymentResponse> GetIncomingPaymentAsync(string paymentHash)
         {
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(paymentHash, nameof(paymentHash));
+            ValidationHelpers.ValidateStringIfNotNull(paymentHash, nameof(paymentHash));
 
             if (string.IsNullOrWhiteSpace(paymentHash))
             {
@@ -409,8 +409,8 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? paymentHash = null)
         {
             #region Input Validation
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(paymentId, nameof(paymentId));
-            ValidationHelpers.EnsureNotNullOrWhiteSpace(paymentHash, nameof(paymentHash));
+            ValidationHelpers.ValidateStringIfNotNull(paymentId, nameof(paymentId));
+            ValidationHelpers.ValidateStringIfNotNull(paymentHash, nameof(paymentHash));
             #endregion
 
             var endpoint = (paymentId, paymentHash) switch
