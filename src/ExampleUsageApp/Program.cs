@@ -43,8 +43,8 @@ namespace ExampleUsageApp
             //Console.WriteLine("Node Info: " + JsonSerializer.Serialize(nodeInfo, _jsonOptions));
 
             //Example: Get balance
-            //var balance = await client.NodeManagement.GetBalanceAsync();
-            //Console.WriteLine("Balance (Sats): " + balance.BalanceSat);
+            var balance = await client.NodeManagement.GetBalanceAsync();
+            Console.WriteLine("Balance (Sats): " + balance.BalanceSat);
 
             //Example: List channels
             //var channels = await client.NodeManagement.ListChannelsAsync();
@@ -134,6 +134,22 @@ namespace ExampleUsageApp
             //var csvExport = await client.Payments.ExportPaymentsCsvAsync();
             //Note: You would typically write the csvExport content to a file here.
             //Since there is no payment history in this example, it will return a NotFound code.
+
+            #endregion
+
+            #region LNURL Examples
+            
+            // Example: Pay a LNURL-pay resource
+            //var lnurlPayResponse = await client.LNURL.Pay(1, "lnurl-pay-resource-url-goes-here", "Test payment");
+            //Console.WriteLine("LNURL Pay Response: " + JsonSerializer.Serialize(lnurlPayResponse, _jsonOptions));
+
+            // Example: Withdraw from a LNURL service
+            //var lnurlWithdraw = await client.LNURL.Withdraw("lnurl-withdraw-service-url-goes-here");
+            //Console.WriteLine("LNURL Withdraw Service Response: " + JsonSerializer.Serialize(lnurlWithdraw, _jsonOptions));
+
+            // Example: Authenticate with a LNURL-auth service
+            //var lnurlAuthResponse = await client.LNURL.Auth("lnurl-auth-service-url-goes-here");
+            //Console.WriteLine("LNURL Auth Response: " + lnurlAuthResponse);
 
             #endregion
 

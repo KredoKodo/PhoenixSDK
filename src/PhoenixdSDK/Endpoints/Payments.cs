@@ -1,4 +1,5 @@
 ﻿using KredoKodo.PhoenixdSDK.ResponseModels.Payments;
+using KredoKodo.PhoenixdSDK.Helpers;
 using RestSharp;
 
 namespace KredoKodo.PhoenixdSDK.Endpoints
@@ -22,13 +23,14 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? webhookUrl = null)
         {
             #region Input Validation
-            ValidatePositiveValue(amountSat, nameof(amountSat));
-            EnsureNotNullOrWhiteSpace(description, nameof(description));
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(description, nameof(description));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(description, nameof(description));
 
             if (description.Length > 128)
                 throw new ArgumentException("Description is too long", nameof(description));
 
-            ValidatePositiveValue(expirySeconds, nameof(expirySeconds));
+            ValidationHelpers.ValidatePositiveValue(expirySeconds, nameof(expirySeconds));
 
             if (externalId != null && string.IsNullOrWhiteSpace(externalId))
                 throw new ArgumentException("External ID cannot be empty when specified", nameof(externalId));
@@ -82,7 +84,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             int? amountSat = null)
         {
             #region Input Validation
-            ValidatePositiveValue(amountSat, nameof(amountSat));
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
 
             if (description != null)
             {
@@ -124,8 +126,10 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string invoice,
             int? amountSat = null)
         {
-            EnsureNotNullOrWhiteSpace(invoice, nameof(invoice));
-            ValidatePositiveValue(amountSat, nameof(amountSat));
+            #region Input Validation
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(invoice, nameof(invoice));
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
+            #endregion
 
             var request = new RestRequest("/payinvoice", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -156,9 +160,9 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? message = null)
         {
             #region Input Validation
-            EnsureNotNullOrWhiteSpace(offer, nameof(offer));
-            EnsureNotNullOrWhiteSpace(message, nameof(message));
-            ValidatePositiveValue(amountSat, nameof(amountSat));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(offer, nameof(offer));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(message, nameof(message));
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
 
             if (message!.Length > 128)
                 throw new ArgumentException("Message is too long", nameof(message));
@@ -198,10 +202,10 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? message = null)
         {
             #region Input Validation
-            EnsureNotNullOrWhiteSpace(address, nameof(address));
-            ValidatePositiveValue(amountSat, nameof(amountSat));
-            EnsureNotNullOrWhiteSpace(message, nameof(message));
-            
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(address, nameof(address));
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(message, nameof(message));
+
             if (message!.Length > 128)
                 throw new ArgumentException("Message is too long", nameof(message));
             #endregion
@@ -240,9 +244,9 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             int feerateSatByte)
         {
             #region Input Validation
-            ValidatePositiveValue(amountSat, nameof(amountSat));
-            EnsureNotNullOrWhiteSpace(address, nameof(address));
-            ValidatePositiveValue(feerateSatByte, nameof(feerateSatByte));
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(address, nameof(address));
+            ValidationHelpers.ValidatePositiveValue(feerateSatByte, nameof(feerateSatByte));
             #endregion
 
             var request = new RestRequest("/sendtoaddress", Method.Post);
@@ -262,7 +266,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>The bump fee result as a string.</returns>
         public async Task<string> BumpFeeAsync(int feerateSatByte)
         {
-            ValidatePositiveValue(feerateSatByte, nameof(feerateSatByte));
+            ValidationHelpers.ValidatePositiveValue(feerateSatByte, nameof(feerateSatByte));
 
             var request = new RestRequest("/bumpfee", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -290,15 +294,15 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? externalId = null)
         {
             #region Input Validation
-            ValidateNonNegativeValue(from, nameof(from));
-            ValidateNonNegativeValue(to, nameof(to));
-            
+            ValidationHelpers.ValidateNonNegativeValue(from, nameof(from));
+            ValidationHelpers.ValidateNonNegativeValue(to, nameof(to));
+
             if (from.HasValue && to.HasValue && from.Value > to.Value)
                 throw new ArgumentException("From timestamp cannot be greater than to timestamp");
 
-            ValidatePositiveValue(limit, nameof(limit));
-            ValidateNonNegativeValue(offset, nameof(offset));
-            EnsureNotNullOrWhiteSpace(externalId, nameof(externalId));
+            ValidationHelpers.ValidatePositiveValue(limit, nameof(limit));
+            ValidationHelpers.ValidateNonNegativeValue(offset, nameof(offset));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(externalId, nameof(externalId));
             #endregion
 
             var request = new RestRequest("/payments/incoming", Method.Get);
@@ -332,7 +336,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>A an incoming payment as a <see cref="GetIncomingPaymentResponse"/> object.</returns>
         public async Task<GetIncomingPaymentResponse> GetIncomingPaymentAsync(string paymentHash)
         {
-            EnsureNotNullOrWhiteSpace(paymentHash, nameof(paymentHash));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(paymentHash, nameof(paymentHash));
 
             if (string.IsNullOrWhiteSpace(paymentHash))
             {
@@ -361,14 +365,14 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             bool? all = null)
         {
             #region Input Validation
-            ValidateNonNegativeValue(from, nameof(from));
-            ValidateNonNegativeValue(to, nameof(to));
-            
+            ValidationHelpers.ValidateNonNegativeValue(from, nameof(from));
+            ValidationHelpers.ValidateNonNegativeValue(to, nameof(to));
+
             if (from.HasValue && to.HasValue && from.Value > to.Value)
                 throw new ArgumentException("From timestamp cannot be greater than to timestamp");
 
-            ValidatePositiveValue(limit, nameof(limit));
-            ValidateNonNegativeValue(offset, nameof(offset));
+            ValidationHelpers.ValidatePositiveValue(limit, nameof(limit));
+            ValidationHelpers.ValidateNonNegativeValue(offset, nameof(offset));
             #endregion
 
             var request = new RestRequest("/payments/outgoing", Method.Get);
@@ -404,8 +408,10 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string? paymentId = null,
             string? paymentHash = null)
         {
-            EnsureNotNullOrWhiteSpace(paymentId, nameof(paymentId));
-            EnsureNotNullOrWhiteSpace(paymentHash, nameof(paymentHash));
+            #region Input Validation
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(paymentId, nameof(paymentId));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(paymentHash, nameof(paymentHash));
+            #endregion
 
             var endpoint = (paymentId, paymentHash) switch
             {
@@ -431,9 +437,9 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         public async Task<string> ExportPaymentsCsvAsync(int? from = null, int? to = null)
         {
             #region Input Validation
-            ValidateNonNegativeValue(from, nameof(from));
-            ValidateNonNegativeValue(to, nameof(to));
-            
+            ValidationHelpers.ValidateNonNegativeValue(from, nameof(from));
+            ValidationHelpers.ValidateNonNegativeValue(to, nameof(to));
+
             if (from.HasValue && to.HasValue && from.Value > to.Value)
                 throw new ArgumentException("From timestamp cannot be greater than to timestamp");
             #endregion
@@ -467,31 +473,5 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             var request = new RestRequest("/getlnaddress", Method.Get);
             return await client.ExecuteRawAsync(request);
         }
-
-        #region Input Validation Helpers
-        private static void ValidatePositiveValue(int? value, string paramName)
-        {
-            if (value.HasValue && value.Value <= 0)
-                throw new ArgumentException($"{paramName} must be positive when specified", paramName);
-        }
-
-        private static void ValidatePositiveValue(long? value, string paramName)
-        {
-            if (value.HasValue && value.Value <= 0)
-                throw new ArgumentException($"{paramName} must be positive when specified", paramName);
-        }
-
-        static void EnsureNotNullOrWhiteSpace(string? value, string paramName)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException($"{paramName} cannot be null or empty", paramName);
-        }
-
-        private static void ValidateNonNegativeValue(int? value, string paramName)
-        {
-            if (value.HasValue && value.Value < 0)
-                throw new ArgumentException($"{paramName} must be non-negative when specified", paramName);
-        }
-        #endregion
     }
 }

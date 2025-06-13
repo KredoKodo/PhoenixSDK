@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <PackageId>KredoKodo.PhoenixdSDK</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>KredoKodo</Authors>
     <Description>A comprehensive .NET 8 SDK for integrating with Phoenixd, the self-custodial Lightning Network node. This library provides a clean, strongly-typed API for creating invoices, sending payments, and managing Lightning Network operations. Features async/await support, automatic authentication, and full error handling for production applications.</Description>
     <PackageTags>kredokodo, phoenixd, sdk</PackageTags>

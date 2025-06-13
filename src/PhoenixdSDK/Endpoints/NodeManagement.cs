@@ -1,4 +1,5 @@
-﻿using KredoKodo.PhoenixdSDK.ResponseModels.NodeManagement;
+﻿using KredoKodo.PhoenixdSDK.Helpers;
+using KredoKodo.PhoenixdSDK.ResponseModels.NodeManagement;
 using RestSharp;
 
 namespace KredoKodo.PhoenixdSDK.Endpoints
@@ -49,8 +50,10 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
             string address,
             int feerateSatByte)
         {
-            EnsureNotNullOrWhiteSpace(channelId, nameof(channelId));
-            EnsureNotNullOrWhiteSpace(address, nameof(address));
+            #region Input Validation
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(channelId, nameof(channelId));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(address, nameof(address));
+            #endregion
 
             if (feerateSatByte <= 0)
                 throw new ArgumentException("Fee rate must be positive", nameof(feerateSatByte));
@@ -72,7 +75,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>Decoded invoice information as a <see cref="DecodeInvoiceResponse"/> object.</returns>
         public async Task<DecodeInvoiceResponse> DecodeInvoiceAsync(string invoice)
         {
-            EnsureNotNullOrWhiteSpace(invoice, nameof(invoice));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(invoice, nameof(invoice));
 
             var request = new RestRequest("/decodeinvoice", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -89,8 +92,7 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>Estimated liquidity fees as a <see cref="EstimateLiquidityFeesResponse"/> object.</returns>
         public async Task<EstimateLiquidityFeesResponse> EstimateLiquidityFeesAsync(int amountSat)
         {
-            if (amountSat <= 0)
-                throw new ArgumentOutOfRangeException(nameof(amountSat), "Amount must be greater than zero.");
+            ValidationHelpers.ValidatePositiveValue(amountSat, nameof(amountSat));
 
             var request = new RestRequest($"/estimateliquidityfees?amountSat={amountSat}", Method.Get);
 
@@ -104,19 +106,13 @@ namespace KredoKodo.PhoenixdSDK.Endpoints
         /// <returns>Decoded invoice information as a <see cref="DecodeBolt12OfferResponse"/> object.</returns>
         public async Task<DecodeBolt12OfferResponse?> DecodeBolt12OfferAsync(string offer)
         {
-            EnsureNotNullOrWhiteSpace(offer, nameof(offer));
+            ValidationHelpers.EnsureNotNullOrWhiteSpace(offer, nameof(offer));
 
             var request = new RestRequest("/decodeoffer", Method.Post);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("offer", offer, ParameterType.GetOrPost);
 
             return await client.ExecuteAsync<DecodeBolt12OfferResponse>(request);
-        }
-
-        static void EnsureNotNullOrWhiteSpace(string? value, string paramName)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException($"{paramName} cannot be null or empty", paramName);
         }
     }
 }

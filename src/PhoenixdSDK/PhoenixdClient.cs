@@ -40,6 +40,7 @@ namespace KredoKodo.PhoenixdSDK
             // Expose public endpoints
             NodeManagement = new NodeManagement(this);
             Payments = new Payments(this);
+            LNURL = new LNURL(this);
         }
 
         /// <summary>
@@ -53,6 +54,7 @@ namespace KredoKodo.PhoenixdSDK
             _restClient = CreateRestClient();
             NodeManagement = new NodeManagement(this);
             Payments = new Payments(this);
+            LNURL = new LNURL(this);
         }
 
         /// <summary>
@@ -69,6 +71,11 @@ namespace KredoKodo.PhoenixdSDK
         /// Provides access to payment operations
         /// </summary>
         public Payments Payments { get; }
+
+        /// <summary>
+        /// Provides access to LNURL operations
+        /// </summary>
+        public LNURL LNURL { get; }
 
         /// <summary>
         /// Creates and configures the RestSharp client

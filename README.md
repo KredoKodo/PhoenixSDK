@@ -1,4 +1,4 @@
-![PhoenixdSdk Logo](.readme/KredoKodo_Logo_png)
+![PhoenixdSdk Logo](.readme/KredoKodo_Logo.png "KredoKodo Logo")
 
 # PhoenixdSdk
 
