@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Better documentation.
 - Better validation of inputs and outputs.
 
+## [1.0.4] - 2025-06-23
+
+### Added
+- New configuration options for the PhoenixdClient that allows for the use of a proxy server.
+
+### Changed
+- N/A (no changes made in this release)
+ 
+### Fixed
+- N/A (no bugs reported in this release)
+
 ## [1.0.3] - 2025-06-13
 
 ### Added
@@ -57,6 +68,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Release Notes
+
+### Version 1.0.4
+Added support for proxy servers in the PhoenixdClient configuration.  This allows users to route their requests through a proxy server if needed.  No bugs were reported in this release.
 
 ### Version 1.0.3
 Fixed a bug that was introduced in the previous version that caused null check errors when optional parameters were not provided.  The string validation class was updated and renamed to fix this issue.

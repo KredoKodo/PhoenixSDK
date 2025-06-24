@@ -2,6 +2,7 @@
 using KredoKodo.PhoenixdSDK.Exceptions;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Net;
 
 namespace KredoKodo.PhoenixdSDK
 {
@@ -90,9 +91,21 @@ namespace KredoKodo.PhoenixdSDK
                 Authenticator = new HttpBasicAuthenticator("Basic", _configuration.ApiPassword)
             };
 
-            var client = new RestClient(options);
+            // Configure proxy if provided
+            if (!string.IsNullOrWhiteSpace(_configuration.ProxyUrl))
+            {
+                var proxy = new WebProxy(_configuration.ProxyUrl);
 
-            return client;
+                if (!string.IsNullOrWhiteSpace(_configuration.ProxyUsername) &&
+                    !string.IsNullOrWhiteSpace(_configuration.ProxyPassword))
+                {
+                    proxy.Credentials = new NetworkCredential(_configuration.ProxyUsername, _configuration.ProxyPassword);
+                }
+
+                options.Proxy = proxy;
+            }
+
+            return new RestClient(options);
         }
 
         /// <summary>
