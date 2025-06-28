@@ -14,13 +14,21 @@
     <IsPackable>True</IsPackable>
     <PackageOutputPath>$(SolutionDir)nuget</PackageOutputPath>
     <RootNamespace>KredoKodo.PhoenixdSDK</RootNamespace>
-    <PackageReadmeFile>$(SolutionDir)README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
+    <None Include="$(SolutionDir)README.md">
+      <Pack>true</Pack>
+      <PackagePath>README.md</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
   </ItemGroup>
+
+  <Target Name="CopyReadme" BeforeTargets="Pack">
+    <Copy SourceFiles="$(SolutionDir)README.md" DestinationFiles="$(ProjectDir)README.md" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
