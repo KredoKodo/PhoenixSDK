@@ -18,17 +18,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(SolutionDir)README.md">
-      <Pack>true</Pack>
-      <PackagePath>README.md</PackagePath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
     <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
   </ItemGroup>
 
-  <Target Name="CopyReadme" BeforeTargets="Pack">
+  <Target Name="CopyReadme" BeforeTargets="GenerateNuspec;Pack">
+    <Error Condition="!Exists('$(SolutionDir)README.md')" Text="Source README.md not found at $(SolutionDir)README.md" />
     <Copy SourceFiles="$(SolutionDir)README.md" DestinationFiles="$(ProjectDir)README.md" SkipUnchangedFiles="true" />
+    <Error Condition="!Exists('$(ProjectDir)README.md')" Text="Failed to copy README.md to project directory" />
   </Target>
 
 </Project>
