@@ -41,7 +41,7 @@ jobs:
       run: dotnet test --configuration Release --no-build --verbosity normal
     
     - name: Pack NuGet package
-      run: dotnet pack ./src/PhoenixdSDK/PhoenixdSDK.csproj --configuration Release --no-build --output ${{ env.NuGetDirectory }}
+      run: dotnet pack ./src/PhoenixdSDK/PhoenixdSDK.csproj --configuration Release --no-build --output ${{ env.NuGetDirectory }} -p:SolutionDir=${{ github.workspace }}/
     
     - name: Upload NuGet package
       uses: actions/upload-artifact@v4
