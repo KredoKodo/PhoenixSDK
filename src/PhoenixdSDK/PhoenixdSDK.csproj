@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <PackageId>KredoKodo.PhoenixdSDK</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Authors>KredoKodo</Authors>
     <Description>A comprehensive .NET 8 SDK for integrating with Phoenixd, the self-custodial Lightning Network node. This library provides a clean, strongly-typed API for creating invoices, sending payments, and managing Lightning Network operations. Features async/await support, automatic authentication, and full error handling for production applications.</Description>
     <PackageTags>kredokodo, phoenixd, sdk</PackageTags>
@@ -14,11 +14,11 @@
     <IsPackable>True</IsPackable>
     <PackageOutputPath>$(SolutionDir)nuget</PackageOutputPath>
     <RootNamespace>KredoKodo.PhoenixdSDK</RootNamespace>
-    <PackageReadmeFile>..\..\README.md</PackageReadmeFile>
+    <PackageReadmeFile>$(SolutionDir)README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
     <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
   </ItemGroup>
