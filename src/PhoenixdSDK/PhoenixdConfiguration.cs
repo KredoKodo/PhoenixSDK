@@ -1,4 +1,6 @@
-﻿namespace KredoKodo.PhoenixdSDK
+﻿using static KredoKodo.PhoenixdSDK.Helpers.Enums;
+
+namespace KredoKodo.PhoenixdSDK
 {
     /// <summary>
     /// Configuration class for Phoenixd client
@@ -34,6 +36,11 @@
         /// Proxy password (optional)
         /// </summary>
         public string? ProxyPassword { get; set; }
+
+        /// <summary>
+        /// Proxy type (optional, e.g., "socks5", "http")
+        /// </summary>
+        public ProxyType ProxyType { get; set; } = ProxyType.Http;
 
         /// <summary>
         /// Validates the configuration

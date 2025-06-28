@@ -3,6 +3,8 @@ using KredoKodo.PhoenixdSDK.Exceptions;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Net;
+using MihaZupan;
+using static KredoKodo.PhoenixdSDK.Helpers.Enums;
 
 namespace KredoKodo.PhoenixdSDK
 {
@@ -94,15 +96,39 @@ namespace KredoKodo.PhoenixdSDK
             // Configure proxy if provided
             if (!string.IsNullOrWhiteSpace(_configuration.ProxyUrl))
             {
-                var proxy = new WebProxy(_configuration.ProxyUrl);
-
-                if (!string.IsNullOrWhiteSpace(_configuration.ProxyUsername) &&
-                    !string.IsNullOrWhiteSpace(_configuration.ProxyPassword))
+                if (_configuration.ProxyType == ProxyType.Socks5)
                 {
-                    proxy.Credentials = new NetworkCredential(_configuration.ProxyUsername, _configuration.ProxyPassword);
+                    // Parse host and port
+                    var parts = _configuration.ProxyUrl.Split(':');
+                    var host = parts[0];
+                    var port = int.Parse(parts[1]);
+                    if (!string.IsNullOrWhiteSpace(_configuration.ProxyUsername) &&
+                        !string.IsNullOrWhiteSpace(_configuration.ProxyPassword))
+                    {
+                        options.Proxy = new HttpToSocks5Proxy(
+                            host,
+                            port,
+                            _configuration.ProxyUsername,
+                            _configuration.ProxyPassword
+                        );
+                    }
+                    else
+                    {
+                        options.Proxy = new HttpToSocks5Proxy(host, port);
+                    }
                 }
+                else // Default to HTTP proxy
+                {
+                    var proxy = new WebProxy(_configuration.ProxyUrl);
 
-                options.Proxy = proxy;
+                    if (!string.IsNullOrWhiteSpace(_configuration.ProxyUsername) &&
+                        !string.IsNullOrWhiteSpace(_configuration.ProxyPassword))
+                    {
+                        proxy.Credentials = new NetworkCredential(_configuration.ProxyUsername, _configuration.ProxyPassword);
+                    }
+
+                    options.Proxy = proxy;
+                }
             }
 
             return new RestClient(options);

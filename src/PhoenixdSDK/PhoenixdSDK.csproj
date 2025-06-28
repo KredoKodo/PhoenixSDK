@@ -14,9 +14,12 @@
     <IsPackable>True</IsPackable>
     <PackageOutputPath>$(SolutionDir)nuget</PackageOutputPath>
     <RootNamespace>KredoKodo.PhoenixdSDK</RootNamespace>
+    <PackageReadmeFile>..\..\README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
   </ItemGroup>
 

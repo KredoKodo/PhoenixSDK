@@ -43,8 +43,8 @@ namespace ExampleUsageApp
             //Console.WriteLine("Node Info: " + JsonSerializer.Serialize(nodeInfo, _jsonOptions));
 
             //Example: Get balance
-            var balance = await client.NodeManagement.GetBalanceAsync();
-            Console.WriteLine("Balance (Sats): " + balance.BalanceSat);
+            //var balance = await client.NodeManagement.GetBalanceAsync();
+            //Console.WriteLine("Balance (Sats): " + balance.BalanceSat);
 
             //Example: List channels
             //var channels = await client.NodeManagement.ListChannelsAsync();
